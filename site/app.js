@@ -26,6 +26,8 @@
     setupSmoothScroll();
     setupReveal();
     setupMotionToggle();
+    setupAdoptionRaceAnimation();
+    setupThemePicker();
   }
 
   // ---------- Nav ----------
@@ -33,7 +35,7 @@
     const list = $("#navList");
     list.innerHTML = APP_DATA.nav.map((item, i) => `
       <li class="nav-item" data-target="${item.id}">
-        <button type="button" data-scroll-to="${item.id}">${item.label}</button>
+        <button type="button" data-scroll-to="${item.id}"><em>${String(i + 1).padStart(2, "0")}</em>${item.label}</button>
       </li>
     `).join("");
   }
@@ -42,11 +44,49 @@
   function renderHero() {
     $("#heroTitle").textContent = APP_DATA.meta.title;
     $("#heroSub").textContent = APP_DATA.meta.subtitle;
+    $("#heroStamp").textContent = APP_DATA.meta.stamp;
+    $("#signatureTag").textContent = `נכתב על ידי ${APP_DATA.meta.author}`;
+  }
+
+  // ---------- Theme picker ----------
+  function setupThemePicker() {
+    const wrap = $("#themeSwatches");
+    const stored = localStorage.getItem("themeAccent");
+    const active = APP_DATA.themes.some(t => t.id === stored) ? stored : APP_DATA.themes[0].id;
+    document.documentElement.setAttribute("data-theme", active);
+
+    wrap.innerHTML = APP_DATA.themes.map(t => `
+      <button type="button" class="theme-swatch swatch-${t.id}" data-theme-id="${t.id}"
+        role="radio" aria-checked="${t.id === active}" title="${t.label}">
+        <span class="sr-only">${t.label}</span>
+      </button>
+    `).join("");
+
+    wrap.addEventListener("click", (e) => {
+      const btn = e.target.closest(".theme-swatch");
+      if (!btn) return;
+      const id = btn.dataset.themeId;
+      document.documentElement.setAttribute("data-theme", id);
+      localStorage.setItem("themeAccent", id);
+      $$(".theme-swatch", wrap).forEach(s => s.setAttribute("aria-checked", String(s === btn)));
+    });
   }
 
   // ---------- Why now ----------
   function renderWhyNow() {
     $("#whyNowIntro").textContent = APP_DATA.whyNow.intro;
+
+    $("#historyTitle").textContent = APP_DATA.aiHistory.title;
+    $("#historyText").textContent = APP_DATA.aiHistory.text;
+    $("#historyStrip").innerHTML = APP_DATA.aiHistory.eras.map(e => `
+      <div class="era">
+        <span class="era-year">${e.year}</span>
+        <span class="era-dot" aria-hidden="true"></span>
+        <h4>${e.title}</h4>
+        <p>${e.text}</p>
+      </div>
+    `).join("");
+
     $("#driverGrid").innerHTML = APP_DATA.whyNow.drivers.map(d => `
       <div class="driver-card reveal">
         <div class="icon-badge"><i data-lucide="${d.icon}"></i></div>
@@ -54,8 +94,41 @@
         <p>${d.text}</p>
       </div>
     `).join("");
+
+    const race = APP_DATA.adoptionRace;
+    $("#raceTitle").textContent = race.title;
+    $("#raceText").textContent = race.text;
+    $("#raceNote").textContent = race.note;
+    const maxMonths = Math.max(...race.items.map(it => it.months));
+    $("#adoptionRace").innerHTML = race.items.map(it => `
+      <div class="race-row ${it.highlight ? "race-row-hot" : ""}">
+        <span class="race-label">${it.label}</span>
+        <div class="race-track">
+          <div class="race-fill" data-target="${(it.months / maxMonths) * 100}" style="width:0%">
+            <span class="race-value">${it.display}</span>
+          </div>
+        </div>
+      </div>
+    `).join("");
+
     $("#riskTitle").textContent = APP_DATA.whyNow.risk.title;
     $("#riskList").innerHTML = APP_DATA.whyNow.risk.points.map(p => `<li>${p}</li>`).join("");
+  }
+
+  function setupAdoptionRaceAnimation() {
+    const track = $("#raceExhibit");
+    if (!track) return;
+    const io = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          $$(".race-fill", track).forEach(el => {
+            el.style.width = el.dataset.target + "%";
+          });
+          io.disconnect();
+        }
+      });
+    }, { threshold: 0.3 });
+    io.observe(track);
   }
 
   // ---------- Vision ----------
@@ -352,7 +425,7 @@
         </div>
       </fieldset>
     `).join("") + `<button type="submit" class="btn btn-primary" style="align-self:flex-start;">
-        <i data-lucide="calculator"></i> חשבו את רמת המוכנות
+        <i data-lucide="gauge"></i> הצגת אבחון
       </button>`;
 
     form.addEventListener("submit", (e) => {

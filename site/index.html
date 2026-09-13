@@ -3,11 +3,17 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>מדריך אינטראקטיבי: הטמעת בינה מלאכותית בארגון</title>
-<meta name="description" content="מדריך אינטראקטיבי לבניית תוכנית אסטרטגית להטמעת בינה מלאכותית בארגון - חזון, עקרונות, מפת דרכים, יוזמות, סיכונים ומדידה.">
+<title>גיבוש אסטרטגיית AI ויישומה הלכה למעשה | אמיר רוזן</title>
+<meta name="description" content="תיק עבודה עצמאי לבניית תוכנית להטמעת בינה מלאכותית בארגון - חזון, כללי יסוד, מפת מהלכים, יוזמות, סיכונים ומדידה.">
+<script>
+  try {
+    var t = localStorage.getItem("themeAccent");
+    if (t) document.documentElement.setAttribute("data-theme", t);
+  } catch (e) {}
+</script>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Rubik:wght@400;500;600;700;800&family=Heebo:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Frank+Ruhl+Libre:wght@500;700;900&family=IBM+Plex+Mono:wght@500;600;700&family=Heebo:wght@300;400;500;600;700&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="styles.css">
 </head>
 <body>
@@ -18,8 +24,8 @@
 <header class="topbar">
   <div class="topbar-inner">
     <div class="brand">
-      <span class="brand-mark" aria-hidden="true"><i data-lucide="brain-circuit"></i></span>
-      <span class="brand-text">מדריך AI לארגון</span>
+      <span class="brand-mark" aria-hidden="true"><i data-lucide="stamp"></i></span>
+      <span class="brand-text">תיק אסטרטגיית AI</span>
     </div>
     <button id="motionToggle" class="motion-toggle" type="button" aria-pressed="false">
       <i data-lucide="wind" aria-hidden="true"></i>
@@ -30,8 +36,8 @@
 </header>
 
 <!-- Side navigation (control-room style) -->
-<nav class="side-nav" id="sideNav" aria-label="ניווט בין פרקי המדריך">
-  <div class="side-nav-title">חדר הבקרה</div>
+<nav class="side-nav" id="sideNav" aria-label="ניווט בין דפי התיק">
+  <div class="side-nav-title">תוכן התיק</div>
   <ol id="navList" class="nav-list"></ol>
 </nav>
 
@@ -40,23 +46,26 @@
   <!-- HERO -->
   <section id="hero" class="section hero-section">
     <div class="hero-glow" aria-hidden="true"></div>
+    <div class="hero-grid-lines" aria-hidden="true"></div>
     <div class="section-inner hero-inner">
-      <p class="eyebrow">מדריך אינטראקטיבי לבניית אסטרטגיה</p>
+      <p class="eyebrow">תיק עבודה מס' AI-01</p>
       <h1 id="heroTitle"></h1>
       <p class="hero-sub" id="heroSub"></p>
       <div class="hero-actions">
         <button class="btn btn-primary" data-scroll-to="why-now">
-          <i data-lucide="play-circle" aria-hidden="true"></i>
-          התחלת המדריך
+          <i data-lucide="folder-open" aria-hidden="true"></i>
+          פתיחת התיק
         </button>
         <button class="btn btn-ghost" data-scroll-to="assessment">
-          <i data-lucide="clipboard-check" aria-hidden="true"></i>
-          בדיקת מוכנות מהירה
+          <i data-lucide="gauge" aria-hidden="true"></i>
+          אבחון מוכנות
         </button>
       </div>
-      <div class="hero-meta">
-        <span><i data-lucide="clock" aria-hidden="true"></i> כ-15 דקות קריאה</span>
-        <span><i data-lucide="layout-dashboard" aria-hidden="true"></i> 11 פרקים אינטראקטיביים</span>
+      <div class="hero-stamp" id="heroStamp" aria-hidden="true"></div>
+
+      <div class="theme-picker" role="radiogroup" aria-label="בחירת גוון צבע לתצוגה">
+        <span class="theme-picker-label">גוון תצוגה:</span>
+        <div id="themeSwatches" class="theme-swatches"></div>
       </div>
     </div>
   </section>
@@ -67,7 +76,28 @@
       <span class="section-kicker">01</span>
       <h2>למה עכשיו</h2>
       <p class="lead" id="whyNowIntro"></p>
+
+      <div class="exhibit" id="historyExhibit">
+        <div class="exhibit-head">
+          <i data-lucide="history" aria-hidden="true"></i>
+          <h3 id="historyTitle"></h3>
+        </div>
+        <p class="exhibit-text" id="historyText"></p>
+        <div class="history-strip" id="historyStrip"></div>
+      </div>
+
       <div class="driver-grid" id="driverGrid"></div>
+
+      <div class="exhibit exhibit-race" id="raceExhibit">
+        <div class="exhibit-head">
+          <i data-lucide="zap" aria-hidden="true"></i>
+          <h3 id="raceTitle"></h3>
+        </div>
+        <p class="exhibit-text" id="raceText"></p>
+        <div class="adoption-race" id="adoptionRace"></div>
+        <p class="exhibit-note" id="raceNote"></p>
+      </div>
+
       <div class="callout callout-danger">
         <h3 id="riskTitle"></h3>
         <ul id="riskList"></ul>
@@ -93,8 +123,8 @@
   <section id="principles" class="section">
     <div class="section-inner">
       <span class="section-kicker">03</span>
-      <h2>עקרונות מנחים</h2>
-      <p class="lead">מסגרת פעולה משותפת שמוודאת שכל יוזמה, פרויקט או החלטה בכל יחידה נשארים נאמנים לחזון. לחצו על עיקרון כדי לראות למה הוא חשוב ולמה הוא מתחבר.</p>
+      <h2>כללי היסוד</h2>
+      <p class="lead">לא הצהרות כוונות - מסגרת פעולה שבודקים מולה כל יוזמה, פרויקט או החלטה. פתחו עיקרון כדי לראות למה הוא חשוב ולאן הוא מתחבר.</p>
       <div class="principles-grid" id="principlesGrid"></div>
     </div>
   </section>
@@ -103,7 +133,7 @@
   <section id="roadmap" class="section section-alt">
     <div class="section-inner">
       <span class="section-kicker">04</span>
-      <h2>מפת הדרכים - מודל דו-ממדי</h2>
+      <h2>מפת המהלכים: פנימה והחוצה</h2>
       <p class="lead" id="roadmapIntro"></p>
 
       <div class="roadmap-controls">
@@ -120,7 +150,7 @@
   <section id="usecases" class="section">
     <div class="section-inner">
       <span class="section-kicker">05</span>
-      <h2>יוזמות ו-Use Cases לפי תחום</h2>
+      <h2>יוזמות לפי תחום</h2>
       <p class="lead">דוגמאות ישימות לכל תחום בארגון. אלו לא החלטות מחייבות אלא בסיס לדיון, תעדוף ובחירה - התאימו, שנו או השתמשו בהן כהשראה.</p>
       <div class="usecase-controls">
         <div class="chipgroup" id="functionChips" role="group" aria-label="סינון לפי תחום"></div>
@@ -167,11 +197,11 @@
   <section id="center" class="section">
     <div class="section-inner">
       <span class="section-kicker">07</span>
-      <h2>הקמת מרכז AI ו-CAIO</h2>
+      <h2>תא הפיקוד: מרכז ה-AI וה-CAIO</h2>
       <p class="lead" id="centerIntro"></p>
 
       <figure class="launch-figure">
-        <img id="launchImg" src="" alt="" loading="lazy">
+        <img id="launchImg" src="" alt="" loading="lazy" width="1400" height="787">
         <figcaption id="launchCaption"></figcaption>
       </figure>
 
@@ -205,7 +235,7 @@
   <section id="kpi" class="section">
     <div class="section-inner">
       <span class="section-kicker">09</span>
-      <h2>מדידה ומשוב מתמיד</h2>
+      <h2>מדדים ומעגל משוב</h2>
       <p class="lead">שני מרכיבים משלימים: מדדי הצלחה שבוחנים ערך אמיתי, ומנגנון משוב שמבטיח שהתוכנית תישאר רלוונטית לאורך זמן.</p>
 
       <div class="kpi-grid" id="kpiGrid"></div>
@@ -219,7 +249,7 @@
   <section id="assessment" class="section section-alt">
     <div class="section-inner">
       <span class="section-kicker">10</span>
-      <h2>בדיקת מוכנות ארגונית</h2>
+      <h2>אבחון מוכנות</h2>
       <p class="lead" id="assessmentIntro"></p>
 
       <form id="assessmentForm" class="assessment-form"></form>
@@ -232,7 +262,7 @@
   <section id="summary" class="section summary-section">
     <div class="section-inner">
       <span class="section-kicker">11</span>
-      <h2>סיכום והחלטות נדרשות</h2>
+      <h2>כתב המלצות להנהלה</h2>
       <p class="lead" id="summaryText"></p>
       <ul class="decision-list" id="decisionList"></ul>
       <p class="closing-line">הבחירה היא בין ארגון שמגיב לשינויים, לבין ארגון שמוביל אותם.</p>
@@ -243,9 +273,11 @@
 
 <footer class="site-footer">
   <div class="section-inner">
-    <p>מדריך זה נבנה כגרסה גנרית ומתומצתת של תוכנית אסטרטגית להטמעת בינה מלאכותית, המיועדת לכל ארגון השוקל את הצעד הזה.</p>
+    <p>תיק זה נכתב ונבנה על ידי <strong>אמיר רוזן</strong> כגרסה עצמאית וגנרית של תוכנית עבודה להטמעת בינה מלאכותית, המיועדת לכל ארגון השוקל את הצעד הזה.</p>
   </div>
 </footer>
+
+<div class="signature-tag" id="signatureTag" aria-hidden="true"></div>
 
 <script src="https://unpkg.com/lucide@latest/dist/umd/lucide.js"></script>
 <script src="data.js"></script>
