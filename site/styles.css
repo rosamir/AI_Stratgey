@@ -269,6 +269,30 @@ h2 { position: relative; }
 .connection-box h3 { color: var(--amber-400); }
 .connection-box p { color: #cfdce6; margin: 0; }
 
+/* ===================== Strategic themes ===================== */
+.theme-cards { display: grid; grid-template-columns: repeat(3, 1fr); gap: 18px; margin: 28px 0 18px; }
+.theme-card { background: var(--paper-0); border: 1px solid var(--line); border-radius: var(--radius); padding: 24px 22px; border-top: 3px solid var(--line); }
+.theme-card-icon { width: 40px; height: 40px; border-radius: 50%; display: flex; align-items: center; justify-content: center; margin-bottom: 14px; }
+.theme-card-icon svg { width: 20px; height: 20px; }
+.theme-card h3 { font-size: 1.05rem; margin: 0 0 8px; }
+.theme-card p { color: var(--ink-700); font-size: 0.92rem; margin: 0; }
+.theme-card-eff { border-top-color: var(--teal-500); }
+.theme-card-eff .theme-card-icon { background: color-mix(in srgb, var(--teal-500) 15%, transparent); color: var(--teal-500); }
+.theme-card-svc { border-top-color: var(--spotlight-500); }
+.theme-card-svc .theme-card-icon { background: color-mix(in srgb, var(--spotlight-500) 15%, transparent); color: var(--spotlight-500); }
+.theme-card-val { border-top-color: var(--warn-500); }
+.theme-card-val .theme-card-icon { background: color-mix(in srgb, var(--warn-500) 15%, transparent); color: var(--warn-500); }
+
+.theme-badges { display: flex; gap: 4px; }
+.theme-badge {
+  width: 24px; height: 24px; border-radius: 50%; display: flex; align-items: center; justify-content: center;
+  flex: none;
+}
+.theme-badge svg { width: 13px; height: 13px; }
+.theme-badge-eff { background: color-mix(in srgb, var(--teal-500) 18%, transparent); color: var(--teal-500); }
+.theme-badge-svc { background: color-mix(in srgb, var(--spotlight-500) 18%, transparent); color: var(--spotlight-500); }
+.theme-badge-val { background: color-mix(in srgb, var(--warn-500) 18%, transparent); color: var(--warn-500); }
+
 /* ===================== Principles (accordion) ===================== */
 .principles-grid { display: grid; gap: 10px; margin-top: 26px; }
 .principle-item {
@@ -487,7 +511,7 @@ table.maturity-table tbody tr:hover td, table.maturity-table tbody tr:hover th {
   :root { --nav-w: 0px; }
   .side-nav { display: none; }
   main, .site-footer { margin-inline-start: 0; }
-  .driver-grid, .pillar-grid, .risk-grid, .ethics-grid, .kpi-grid { grid-template-columns: 1fr; }
+  .driver-grid, .pillar-grid, .risk-grid, .ethics-grid, .kpi-grid, .theme-cards { grid-template-columns: 1fr; }
   .roadmap-panel { grid-template-columns: 1fr; }
   .caio-block { grid-template-columns: 1fr; }
   .om-grid { grid-template-columns: 1fr; }

@@ -12,6 +12,7 @@
     renderVision();
     renderPrinciples();
     renderRoadmap();
+    renderThemes();
     renderUseCases();
     renderWorkforce();
     renderCenter();
@@ -265,6 +266,24 @@
   // ---------- Use cases ----------
   let activeFunctions = new Set(["all"]);
 
+  function renderThemes() {
+    const f = APP_DATA.themesFramework;
+    $("#themesIntro").textContent = f.intro;
+    $("#themesLegend").textContent = f.legend;
+    $("#themeCards").innerHTML = f.items.map(t => `
+      <div class="theme-card reveal theme-card-${t.id}">
+        <div class="theme-card-icon"><i data-lucide="${t.icon}"></i></div>
+        <h3>${t.title}</h3>
+        <p>${t.text}</p>
+      </div>
+    `).join("");
+    if (window.lucide) lucide.createIcons();
+  }
+
+  function themeLookup(id) {
+    return APP_DATA.themesFramework.items.find(t => t.id === id);
+  }
+
   function renderUseCases() {
     const chips = $("#functionChips");
     const all = [{ id: "all", name: "הכול" }, ...APP_DATA.useCaseGroups];
@@ -298,21 +317,31 @@
       : APP_DATA.useCaseGroups.filter(g => activeFunctions.has(g.id));
 
     if (groups.length === 0) {
-      tbody.innerHTML = `<tr><td colspan="4">בחרו לפחות תחום אחד כדי לראות יוזמות.</td></tr>`;
+      tbody.innerHTML = `<tr><td colspan="5">בחרו לפחות תחום אחד כדי לראות יוזמות.</td></tr>`;
       return;
     }
 
     tbody.innerHTML = groups.map(g => `
-      <tr class="usecase-group-row"><td colspan="4">${g.name}</td></tr>
+      <tr class="usecase-group-row"><td colspan="5">${g.name}</td></tr>
       ${g.cases.map(c => `
         <tr>
           <td>${c.name}</td>
           <td>${c.desc}</td>
           <td><span class="horizon-badge">${c.horizon}</span></td>
           <td>${c.benefit}</td>
+          <td>
+            <div class="theme-badges">
+              ${(c.themes || []).map(id => {
+                const t = themeLookup(id);
+                return t ? `<span class="theme-badge theme-badge-${t.id}" title="${t.title}"><i data-lucide="${t.icon}"></i></span>` : "";
+              }).join("")}
+            </div>
+          </td>
         </tr>
       `).join("")}
     `).join("");
+
+    if (window.lucide) lucide.createIcons();
   }
 
   // ---------- Workforce ----------
