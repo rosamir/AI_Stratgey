@@ -189,11 +189,11 @@ h2 { position: relative; }
 }
 
 .signature-tag {
-  position: fixed; bottom: 14px; inset-inline-start: var(--nav-w); inset-inline-end: 0; z-index: 80;
-  width: fit-content; margin: 0 auto;
-  font-family: var(--mono); font-size: 0.72rem; color: var(--ink-500); background: rgba(255,255,255,.85);
-  padding: 6px 12px; border-radius: 999px; border: 1px solid var(--line); backdrop-filter: blur(4px);
-  pointer-events: none;
+  position: fixed; bottom: 0; inset-inline-start: 0; inset-inline-end: 0; z-index: 80;
+  margin-inline-start: var(--nav-w); height: 38px;
+  display: flex; align-items: center; justify-content: center;
+  font-family: var(--mono); font-size: 0.72rem; color: var(--ink-500); background: rgba(255,255,255,.92);
+  border-top: 1px solid var(--line); backdrop-filter: blur(6px);
 }
 
 /* ===================== Why now ===================== */
@@ -480,7 +480,7 @@ table.maturity-table tbody tr:hover td, table.maturity-table tbody tr:hover th {
 .decision-list li::before { content: "\2192"; color: var(--teal-400); font-weight: 800; flex: none; }
 .closing-line { font-size: 1.15rem; font-weight: 700; color: var(--amber-400); margin-top: 20px; }
 
-.site-footer { background: var(--navy-900); border-top: 1px solid rgba(255,255,255,.1); color: #93a5b4; padding: 26px 0; margin-inline-start: var(--nav-w); font-size: 0.85rem; }
+.site-footer { background: var(--navy-900); border-top: 1px solid rgba(255,255,255,.1); color: #93a5b4; padding: 26px 0 calc(26px + 38px); margin-inline-start: var(--nav-w); font-size: 0.85rem; }
 
 /* ===================== Responsive ===================== */
 @media (max-width: 980px) {
