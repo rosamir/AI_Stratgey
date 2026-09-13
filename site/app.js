@@ -408,56 +408,28 @@
     `).join("");
   }
 
-  // ---------- Assessment ----------
+  // ---------- Assessment (informative maturity matrix) ----------
   function renderAssessment() {
     $("#assessmentIntro").textContent = APP_DATA.assessment.intro;
-    const form = $("#assessmentForm");
-    form.innerHTML = APP_DATA.assessment.questions.map(q => `
-      <fieldset class="aq">
-        <legend>${q.text}</legend>
-        <div class="aq-options">
-          ${q.options.map((o, i) => `
-            <label class="aq-option">
-              <input type="radio" name="${q.id}" value="${o.score}" ${i === 0 ? "" : ""} required>
-              <span>${o.label}</span>
-            </label>
-          `).join("")}
-        </div>
-      </fieldset>
-    `).join("") + `<button type="submit" class="btn btn-primary" style="align-self:flex-start;">
-        <i data-lucide="gauge"></i> הצגת אבחון
-      </button>`;
 
-    form.addEventListener("submit", (e) => {
-      e.preventDefault();
-      computeAssessment();
-    });
-    if (window.lucide) lucide.createIcons();
-  }
+    const stages = APP_DATA.assessment.stages;
+    const head = $("#maturityHead");
+    head.innerHTML = `<th scope="col"></th>` + stages.map(s => `<th scope="col">${s.title}</th>`).join("");
 
-  function computeAssessment() {
-    const form = $("#assessmentForm");
-    const questions = APP_DATA.assessment.questions;
-    let total = 0;
-    let missing = false;
-    questions.forEach(q => {
-      const checked = form.querySelector(`input[name="${q.id}"]:checked`);
-      if (!checked) missing = true;
-      else total += Number(checked.value);
-    });
-    if (missing) return;
+    $("#maturityBody").innerHTML = APP_DATA.assessment.dimensions.map(d => `
+      <tr>
+        <th scope="row">${d.text}</th>
+        ${d.levels.map(l => `<td>${l}</td>`).join("")}
+      </tr>
+    `).join("");
 
-    const max = questions.length * 3;
-    const result = APP_DATA.assessment.results.find(r => total <= r.max) || APP_DATA.assessment.results[APP_DATA.assessment.results.length - 1];
-    const box = $("#assessmentResult");
-    const pct = Math.round((total / max) * 100);
-    box.hidden = false;
-    box.innerHTML = `
-      <h3>${result.title} — ציון מוכנות ${total}/${max}</h3>
-      <div class="score-bar"><div class="score-fill" style="width:${pct}%"></div></div>
-      <p>${result.text}</p>
-    `;
-    box.scrollIntoView({ behavior: "smooth", block: "center" });
+    $("#stageStrip").innerHTML = stages.map((s, i) => `
+      <div class="stage-card reveal">
+        <span class="stage-num">${String(i + 1).padStart(2, "0")}</span>
+        <h4>${s.title}</h4>
+        <p>${s.text}</p>
+      </div>
+    `).join("");
   }
 
   // ---------- Summary ----------

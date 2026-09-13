@@ -163,13 +163,8 @@ h2 { position: relative; }
   mask-image: radial-gradient(900px 500px at 70% 30%, #000 20%, transparent 75%);
 }
 .hero-inner { position: relative; z-index: 1; }
-.eyebrow {
-  color: var(--amber-400); font-weight: 700; letter-spacing: .1em; margin-bottom: 16px; font-family: var(--mono);
-  font-size: 0.8rem; text-transform: uppercase;
-}
-#heroTitle { color: #fff; }
+#heroTitle { color: #fff; margin-top: 0; }
 .hero-sub { color: #c8cdd4; font-size: 1.15rem; max-width: 58ch; margin-top: 16px; }
-.hero-actions { display: flex; gap: 14px; margin-top: 34px; flex-wrap: wrap; }
 .hero-stamp {
   display: inline-block; margin-top: 44px; border: 2px dashed rgba(var(--accent-rgb),.55); color: var(--amber-400);
   font-family: var(--mono); font-size: 0.78rem; letter-spacing: .06em; padding: 8px 16px;
@@ -194,22 +189,12 @@ h2 { position: relative; }
 }
 
 .signature-tag {
-  position: fixed; bottom: 14px; inset-inline-end: calc(var(--nav-w) + 20px); z-index: 80;
+  position: fixed; bottom: 14px; inset-inline-start: var(--nav-w); inset-inline-end: 0; z-index: 80;
+  width: fit-content; margin: 0 auto;
   font-family: var(--mono); font-size: 0.72rem; color: var(--ink-500); background: rgba(255,255,255,.85);
   padding: 6px 12px; border-radius: 999px; border: 1px solid var(--line); backdrop-filter: blur(4px);
   pointer-events: none;
 }
-
-.btn {
-  display: inline-flex; align-items: center; gap: 10px; padding: 13px 26px; border-radius: 999px;
-  font-weight: 700; font-size: 0.98rem; cursor: pointer; border: 2px solid transparent; transition: transform .15s, background .15s, border-color .15s;
-}
-.btn svg { width: 18px; height: 18px; }
-.btn:hover, .btn:focus-visible { transform: translateY(-2px); }
-.btn-primary { background: var(--amber-500); color: #fff; }
-.btn-primary:hover { background: var(--amber-400); }
-.btn-ghost { background: transparent; color: #fff; border-color: rgba(255,255,255,.4); }
-.btn-ghost:hover { border-color: #fff; background: rgba(255,255,255,.08); }
 
 /* ===================== Why now ===================== */
 .exhibit {
@@ -465,28 +450,23 @@ table.usecase-table tbody tr:hover { background: var(--paper-50); }
 }
 [dir="rtl"] .loop-step:not(:last-child)::after { transform: translateY(-50%); }
 
-/* ===================== Assessment ===================== */
-.assessment-form { display: flex; flex-direction: column; gap: 20px; margin-top: 26px; }
-.aq { background: var(--paper-0); border: 1px solid var(--line); border-radius: var(--radius); padding: 20px 22px; }
-.aq legend { font-weight: 700; color: var(--navy-800); padding: 0 4px 12px; font-size: 1rem; }
-.aq-options { display: flex; flex-direction: column; gap: 8px; }
-.aq-option {
-  display: flex; align-items: center; gap: 10px; padding: 10px 14px; border-radius: 10px; border: 1px solid var(--line);
-  cursor: pointer; font-size: 0.93rem; color: var(--ink-700); background: var(--paper-50); transition: border-color .15s, background .15s;
+/* ===================== Assessment (informative maturity matrix) ===================== */
+.maturity-table-wrap { overflow-x: auto; border: 1px solid var(--line); background: var(--paper-0); border-radius: var(--radius); margin-top: 26px; }
+table.maturity-table { width: 100%; border-collapse: collapse; min-width: 640px; }
+table.maturity-table th, table.maturity-table td { padding: 14px 18px; font-size: 0.9rem; text-align: start; vertical-align: top; }
+table.maturity-table thead th {
+  background: var(--navy-800); color: #fff; font-family: var(--mono); font-size: 0.78rem; font-weight: 700; white-space: nowrap;
 }
-.aq-option:hover { border-color: var(--teal-400); }
-.aq-option input { accent-color: var(--teal-500); width: 16px; height: 16px; }
-.aq-option:has(input:checked) { background: #ecf7f5; border-color: var(--teal-500); color: var(--navy-800); font-weight: 600; }
-.aq-option:has(input:focus-visible) { outline: 2px solid var(--teal-500); outline-offset: 2px; }
+table.maturity-table thead th:first-child { background: var(--navy-900); }
+table.maturity-table tbody th { color: var(--navy-800); font-weight: 700; border-top: 1px solid var(--line); white-space: nowrap; }
+table.maturity-table tbody td { color: var(--ink-700); border-top: 1px solid var(--line); border-inline-start: 1px solid var(--line); }
+table.maturity-table tbody tr:hover td, table.maturity-table tbody tr:hover th { background: var(--paper-50); }
 
-.assessment-result {
-  margin-top: 26px; background: var(--navy-800); color: #fff; border-radius: var(--radius);
-  padding: 26px 28px;
-}
-.assessment-result h3 { color: var(--amber-400); margin-bottom: 6px; }
-.assessment-result p { color: #dbe6ee; margin: 0; }
-.assessment-result .score-bar { height: 8px; border-radius: 6px; background: rgba(255,255,255,.15); margin: 16px 0; overflow: hidden; }
-.assessment-result .score-fill { height: 100%; background: linear-gradient(90deg, var(--teal-400), var(--amber-400)); border-radius: 6px; transition: width .5s var(--ease); }
+.stage-strip { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; margin-top: 22px; }
+.stage-card { background: var(--paper-0); border: 1px solid var(--line); border-radius: var(--radius); padding: 20px 22px; }
+.stage-num { font-family: var(--mono); font-size: 0.78rem; color: var(--amber-500); font-weight: 700; }
+.stage-card h4 { margin: 6px 0 8px; }
+.stage-card p { margin: 0; color: var(--ink-700); font-size: 0.9rem; }
 
 /* ===================== Summary ===================== */
 .summary-section { background: var(--navy-900); color: #fff; }

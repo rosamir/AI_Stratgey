@@ -4,7 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>גיבוש אסטרטגיית AI ויישומה הלכה למעשה | אמיר רוזן</title>
-<meta name="description" content="תיק עבודה עצמאי לבניית תוכנית להטמעת בינה מלאכותית בארגון - חזון, כללי יסוד, מפת מהלכים, יוזמות, סיכונים ומדידה.">
+<meta name="description" content="תוכנית עבודה לבניית אסטרטגיה להטמעת בינה מלאכותית בארגון - חזון, כללי יסוד, מפת מהלכים, יוזמות, סיכונים ומדידה.">
 <script>
   try {
     var t = localStorage.getItem("themeAccent");
@@ -24,8 +24,8 @@
 <header class="topbar">
   <div class="topbar-inner">
     <div class="brand">
-      <span class="brand-mark" aria-hidden="true"><i data-lucide="stamp"></i></span>
-      <span class="brand-text">תיק אסטרטגיית AI</span>
+      <span class="brand-mark" aria-hidden="true"><i data-lucide="compass"></i></span>
+      <span class="brand-text">אסטרטגיית AI לארגון</span>
     </div>
     <button id="motionToggle" class="motion-toggle" type="button" aria-pressed="false">
       <i data-lucide="wind" aria-hidden="true"></i>
@@ -36,8 +36,8 @@
 </header>
 
 <!-- Side navigation (control-room style) -->
-<nav class="side-nav" id="sideNav" aria-label="ניווט בין דפי התיק">
-  <div class="side-nav-title">תוכן התיק</div>
+<nav class="side-nav" id="sideNav" aria-label="ניווט ראשי">
+  <div class="side-nav-title">פרקים</div>
   <ol id="navList" class="nav-list"></ol>
 </nav>
 
@@ -48,19 +48,8 @@
     <div class="hero-glow" aria-hidden="true"></div>
     <div class="hero-grid-lines" aria-hidden="true"></div>
     <div class="section-inner hero-inner">
-      <p class="eyebrow">תיק עבודה מס' AI-01</p>
       <h1 id="heroTitle"></h1>
       <p class="hero-sub" id="heroSub"></p>
-      <div class="hero-actions">
-        <button class="btn btn-primary" data-scroll-to="why-now">
-          <i data-lucide="folder-open" aria-hidden="true"></i>
-          פתיחת התיק
-        </button>
-        <button class="btn btn-ghost" data-scroll-to="assessment">
-          <i data-lucide="gauge" aria-hidden="true"></i>
-          אבחון מוכנות
-        </button>
-      </div>
       <div class="hero-stamp" id="heroStamp" aria-hidden="true"></div>
 
       <div class="theme-picker" role="radiogroup" aria-label="בחירת גוון צבע לתצוגה">
@@ -252,9 +241,14 @@
       <h2>אבחון מוכנות</h2>
       <p class="lead" id="assessmentIntro"></p>
 
-      <form id="assessmentForm" class="assessment-form"></form>
+      <div class="maturity-table-wrap">
+        <table class="maturity-table" id="maturityTable">
+          <thead><tr id="maturityHead"></tr></thead>
+          <tbody id="maturityBody"></tbody>
+        </table>
+      </div>
 
-      <div id="assessmentResult" class="assessment-result" hidden></div>
+      <div class="stage-strip" id="stageStrip"></div>
     </div>
   </section>
 
@@ -273,7 +267,7 @@
 
 <footer class="site-footer">
   <div class="section-inner">
-    <p>תיק זה נכתב ונבנה על ידי <strong>אמיר רוזן</strong> כגרסה עצמאית וגנרית של תוכנית עבודה להטמעת בינה מלאכותית, המיועדת לכל ארגון השוקל את הצעד הזה.</p>
+    <p>אתר זה נכתב ונבנה על ידי <strong>אמיר רוזן</strong> כגרסה עצמאית וגנרית של תוכנית עבודה להטמעת בינה מלאכותית, המיועדת לכל ארגון השוקל את הצעד הזה.</p>
   </div>
 </footer>
 
