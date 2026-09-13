@@ -6,6 +6,7 @@
   document.addEventListener("DOMContentLoaded", init);
 
   function init() {
+    setupAuth();
     renderNav();
     renderHero();
     renderWhyNow();
@@ -29,6 +30,150 @@
     setupMotionToggle();
     setupAdoptionRaceAnimation();
     setupThemePicker();
+  }
+
+  // ---------- Auth & Login ----------
+  // להגדרת התיעוד ב-Google Sheets: יש להדביק כאן את ה-URL שהתקבל מגוגל
+  const GOOGLE_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbw2UEU_Ec_Al-9Q0RWwlSMBnDNuO3oao5b9nH7kUSSAfW4yRkdBnZdOA2vIsvbT4TJd/exec";
+
+  const USERS_DB = [
+    { username: "amir", password: "036021720", displayName: "אמיר (amir)" },
+    { username: "admin", password: "036021720", displayName: "מנהל (admin)" },
+    { username: "avi", password: "2206", displayName: "אבי (avi)" }
+  ];
+
+  function logLoginEvent(username) {
+    if (!GOOGLE_SCRIPT_URL) return;
+    try {
+      const payload = {
+        username: username,
+        timestamp: new Date().toLocaleString("he-IL", { timeZone: "Asia/Jerusalem" }),
+        userAgent: navigator.userAgent
+      };
+      fetch(GOOGLE_SCRIPT_URL, {
+        method: "POST",
+        mode: "no-cors",
+        headers: { "Content-Type": "text/plain" },
+        body: JSON.stringify(payload)
+      }).catch(err => console.error("Logging failed:", err));
+    } catch (e) {
+      console.error("Logging error:", e);
+    }
+  }
+
+  function setupAuth() {
+    const overlay = $("#loginOverlay");
+    const form = $("#loginForm");
+    const usernameInput = $("#usernameInput");
+    const passwordInput = $("#passwordInput");
+    const togglePasswordBtn = $("#togglePasswordBtn");
+    const rememberMeInput = $("#rememberMeInput");
+    const loginError = $("#loginError");
+    const loginErrorText = $("#loginErrorText");
+    const userProfile = $("#userProfile");
+    const currentUserName = $("#currentUserName");
+    const logoutBtn = $("#logoutBtn");
+
+    if (!overlay || !form) return;
+
+    // Check existing session
+    const savedUser = localStorage.getItem("ai_strategy_user") || sessionStorage.getItem("ai_strategy_user");
+    if (savedUser) {
+      const found = USERS_DB.find(u => u.username === savedUser);
+      if (found) {
+        grantAccess(found, false);
+      } else {
+        denyAccess();
+      }
+    } else {
+      denyAccess();
+    }
+
+    // Toggle password visibility
+    if (togglePasswordBtn) {
+      togglePasswordBtn.addEventListener("click", () => {
+        const isPassword = passwordInput.getAttribute("type") === "password";
+        passwordInput.setAttribute("type", isPassword ? "text" : "password");
+        togglePasswordBtn.setAttribute("aria-label", isPassword ? "הסתר סיסמה" : "הצג סיסמה");
+        const icon = togglePasswordBtn.querySelector("i");
+        if (icon) {
+          icon.setAttribute("data-lucide", isPassword ? "eye-off" : "eye");
+          if (window.lucide) lucide.createIcons();
+        }
+      });
+    }
+
+    // Preset quick buttons
+    $$(".preset-btn").forEach(btn => {
+      btn.addEventListener("click", () => {
+        usernameInput.value = btn.dataset.user;
+        passwordInput.value = btn.dataset.pass;
+        hideError();
+        passwordInput.focus();
+      });
+    });
+
+    // Form submit
+    form.addEventListener("submit", (e) => {
+      e.preventDefault();
+      const enteredUser = usernameInput.value.trim().toLowerCase();
+      const enteredPass = passwordInput.value;
+
+      if (!enteredUser || !enteredPass) {
+        showError("נא להזין שם משתמש וסיסמה");
+        return;
+      }
+
+      const userMatch = USERS_DB.find(
+        u => u.username.toLowerCase() === enteredUser && u.password === enteredPass
+      );
+
+      if (userMatch) {
+        hideError();
+        const store = rememberMeInput && rememberMeInput.checked ? localStorage : sessionStorage;
+        store.setItem("ai_strategy_user", userMatch.username);
+        grantAccess(userMatch, true);
+        logLoginEvent(userMatch.username);
+      } else {
+        showError("שם משתמש או סיסמה שגויים");
+      }
+    });
+
+    // Logout
+    if (logoutBtn) {
+      logoutBtn.addEventListener("click", () => {
+        localStorage.removeItem("ai_strategy_user");
+        sessionStorage.removeItem("ai_strategy_user");
+        usernameInput.value = "";
+        passwordInput.value = "";
+        hideError();
+        denyAccess();
+      });
+    }
+
+    function grantAccess(userObj, animate) {
+      document.body.classList.remove("is-logged-out");
+      if (currentUserName) currentUserName.textContent = userObj.displayName;
+      if (userProfile) userProfile.style.display = "flex";
+      if (overlay) overlay.classList.add("hidden");
+      if (window.lucide) lucide.createIcons();
+    }
+
+    function denyAccess() {
+      document.body.classList.add("is-logged-out");
+      if (userProfile) userProfile.style.display = "none";
+      if (overlay) overlay.classList.remove("hidden");
+      if (window.lucide) lucide.createIcons();
+    }
+
+    function showError(msg) {
+      if (loginErrorText) loginErrorText.textContent = msg;
+      if (loginError) loginError.style.display = "flex";
+    }
+
+    function hideError() {
+      if (loginError) loginError.style.display = "none";
+    }
   }
 
   // ---------- Nav ----------
