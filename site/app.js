@@ -67,7 +67,6 @@
     const usernameInput = $("#usernameInput");
     const passwordInput = $("#passwordInput");
     const togglePasswordBtn = $("#togglePasswordBtn");
-    const rememberMeInput = $("#rememberMeInput");
     const loginError = $("#loginError");
     const loginErrorText = $("#loginErrorText");
     const userProfile = $("#userProfile");
@@ -76,8 +75,11 @@
 
     if (!overlay || !form) return;
 
-    // Check existing session
-    const savedUser = localStorage.getItem("ai_strategy_user") || sessionStorage.getItem("ai_strategy_user");
+    // Clean any old localStorage entries to strictly enforce per-session auth
+    localStorage.removeItem("ai_strategy_user");
+
+    // Check existing session (sessionStorage only)
+    const savedUser = sessionStorage.getItem("ai_strategy_user");
     if (savedUser) {
       const found = USERS_DB.find(u => u.username === savedUser);
       if (found) {
@@ -103,16 +105,6 @@
       });
     }
 
-    // Preset quick buttons
-    $$(".preset-btn").forEach(btn => {
-      btn.addEventListener("click", () => {
-        usernameInput.value = btn.dataset.user;
-        passwordInput.value = btn.dataset.pass;
-        hideError();
-        passwordInput.focus();
-      });
-    });
-
     // Form submit
     form.addEventListener("submit", (e) => {
       e.preventDefault();
@@ -130,8 +122,7 @@
 
       if (userMatch) {
         hideError();
-        const store = rememberMeInput && rememberMeInput.checked ? localStorage : sessionStorage;
-        store.setItem("ai_strategy_user", userMatch.username);
+        sessionStorage.setItem("ai_strategy_user", userMatch.username);
         grantAccess(userMatch, true);
         logLoginEvent(userMatch.username);
       } else {
@@ -142,8 +133,8 @@
     // Logout
     if (logoutBtn) {
       logoutBtn.addEventListener("click", () => {
-        localStorage.removeItem("ai_strategy_user");
         sessionStorage.removeItem("ai_strategy_user");
+        localStorage.removeItem("ai_strategy_user");
         usernameInput.value = "";
         passwordInput.value = "";
         hideError();
