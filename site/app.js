@@ -27,7 +27,6 @@
     setupScrollSpy();
     setupSmoothScroll();
     setupReveal();
-    setupMotionToggle();
     setupAdoptionRaceAnimation();
     setupThemePicker();
   }
@@ -37,9 +36,11 @@
   const GOOGLE_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbw2UEU_Ec_Al-9Q0RWwlSMBnDNuO3oao5b9nH7kUSSAfW4yRkdBnZdOA2vIsvbT4TJd/exec";
 
   const USERS_DB = [
-    { username: "amir", password: "036021720", displayName: "אמיר (amir)" },
-    { username: "admin", password: "036021720", displayName: "מנהל (admin)" },
-    { username: "avi", password: "2206", displayName: "אבי (avi)" }
+    { username: "amir", password: "036021720", displayName: "amir" },
+    { username: "admin", password: "036021720", displayName: "admin" },
+    { username: "avi", password: "2206", displayName: "avi" },
+    { username: "meshi", password: "2206", displayName: "meshi" },
+    { username: "guest", password: "2206", displayName: "guest" }
   ];
 
   function logLoginEvent(username) {
