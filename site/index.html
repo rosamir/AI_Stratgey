@@ -1,0 +1,254 @@
+<!DOCTYPE html>
+<html lang="he" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>מדריך אינטראקטיבי: הטמעת בינה מלאכותית בארגון</title>
+<meta name="description" content="מדריך אינטראקטיבי לבניית תוכנית אסטרטגית להטמעת בינה מלאכותית בארגון - חזון, עקרונות, מפת דרכים, יוזמות, סיכונים ומדידה.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Rubik:wght@400;500;600;700;800&family=Heebo:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+<a href="#main" class="skip-link">דלג לתוכן הראשי</a>
+
+<!-- Top bar -->
+<header class="topbar">
+  <div class="topbar-inner">
+    <div class="brand">
+      <span class="brand-mark" aria-hidden="true"><i data-lucide="brain-circuit"></i></span>
+      <span class="brand-text">מדריך AI לארגון</span>
+    </div>
+    <button id="motionToggle" class="motion-toggle" type="button" aria-pressed="false">
+      <i data-lucide="wind" aria-hidden="true"></i>
+      <span>הפחתת אנימציות</span>
+    </button>
+  </div>
+  <div class="progress-track" aria-hidden="true"><div id="progressFill" class="progress-fill"></div></div>
+</header>
+
+<!-- Side navigation (control-room style) -->
+<nav class="side-nav" id="sideNav" aria-label="ניווט בין פרקי המדריך">
+  <div class="side-nav-title">חדר הבקרה</div>
+  <ol id="navList" class="nav-list"></ol>
+</nav>
+
+<main id="main">
+
+  <!-- HERO -->
+  <section id="hero" class="section hero-section">
+    <div class="hero-glow" aria-hidden="true"></div>
+    <div class="section-inner hero-inner">
+      <p class="eyebrow">מדריך אינטראקטיבי לבניית אסטרטגיה</p>
+      <h1 id="heroTitle"></h1>
+      <p class="hero-sub" id="heroSub"></p>
+      <div class="hero-actions">
+        <button class="btn btn-primary" data-scroll-to="why-now">
+          <i data-lucide="play-circle" aria-hidden="true"></i>
+          התחלת המדריך
+        </button>
+        <button class="btn btn-ghost" data-scroll-to="assessment">
+          <i data-lucide="clipboard-check" aria-hidden="true"></i>
+          בדיקת מוכנות מהירה
+        </button>
+      </div>
+      <div class="hero-meta">
+        <span><i data-lucide="clock" aria-hidden="true"></i> כ-15 דקות קריאה</span>
+        <span><i data-lucide="layout-dashboard" aria-hidden="true"></i> 11 פרקים אינטראקטיביים</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- WHY NOW -->
+  <section id="why-now" class="section">
+    <div class="section-inner">
+      <span class="section-kicker">01</span>
+      <h2>למה עכשיו</h2>
+      <p class="lead" id="whyNowIntro"></p>
+      <div class="driver-grid" id="driverGrid"></div>
+      <div class="callout callout-danger">
+        <h3 id="riskTitle"></h3>
+        <ul id="riskList"></ul>
+      </div>
+    </div>
+  </section>
+
+  <!-- VISION -->
+  <section id="vision" class="section section-alt">
+    <div class="section-inner">
+      <span class="section-kicker">02</span>
+      <h2>חזון וייעוד</h2>
+      <blockquote class="vision-quote" id="visionStatement"></blockquote>
+      <div class="pillar-grid" id="pillarGrid"></div>
+      <div class="connection-box">
+        <h3 id="connectionTitle"></h3>
+        <p id="connectionText"></p>
+      </div>
+    </div>
+  </section>
+
+  <!-- PRINCIPLES -->
+  <section id="principles" class="section">
+    <div class="section-inner">
+      <span class="section-kicker">03</span>
+      <h2>עקרונות מנחים</h2>
+      <p class="lead">מסגרת פעולה משותפת שמוודאת שכל יוזמה, פרויקט או החלטה בכל יחידה נשארים נאמנים לחזון. לחצו על עיקרון כדי לראות למה הוא חשוב ולמה הוא מתחבר.</p>
+      <div class="principles-grid" id="principlesGrid"></div>
+    </div>
+  </section>
+
+  <!-- ROADMAP -->
+  <section id="roadmap" class="section section-alt">
+    <div class="section-inner">
+      <span class="section-kicker">04</span>
+      <h2>מפת הדרכים - מודל דו-ממדי</h2>
+      <p class="lead" id="roadmapIntro"></p>
+
+      <div class="roadmap-controls">
+        <div class="tabgroup" id="horizonTabs" role="tablist" aria-label="בחירת טווח זמן"></div>
+        <div class="chipgroup" id="directionChips" role="group" aria-label="בחירת כיוון פעולה"></div>
+      </div>
+
+      <div class="timeline-track" id="timelineTrack" aria-hidden="true"></div>
+      <div class="roadmap-panel" id="roadmapPanel"></div>
+    </div>
+  </section>
+
+  <!-- USE CASES -->
+  <section id="usecases" class="section">
+    <div class="section-inner">
+      <span class="section-kicker">05</span>
+      <h2>יוזמות ו-Use Cases לפי תחום</h2>
+      <p class="lead">דוגמאות ישימות לכל תחום בארגון. אלו לא החלטות מחייבות אלא בסיס לדיון, תעדוף ובחירה - התאימו, שנו או השתמשו בהן כהשראה.</p>
+      <div class="usecase-controls">
+        <div class="chipgroup" id="functionChips" role="group" aria-label="סינון לפי תחום"></div>
+      </div>
+      <div class="usecase-table-wrap">
+        <table class="usecase-table" id="usecaseTable">
+          <thead>
+            <tr>
+              <th scope="col">יוזמה</th>
+              <th scope="col">מה זה עושה</th>
+              <th scope="col">טווח זמן</th>
+              <th scope="col">תועלת עיקרית</th>
+            </tr>
+          </thead>
+          <tbody id="usecaseTbody"></tbody>
+        </table>
+      </div>
+    </div>
+  </section>
+
+  <!-- WORKFORCE -->
+  <section id="workforce" class="section section-alt">
+    <div class="section-inner">
+      <span class="section-kicker">06</span>
+      <h2>כוח אדם וניהול שינוי</h2>
+      <p class="lead" id="workforceIntro"></p>
+
+      <h3 class="subhead">תפקידים שצפויים להשתנות</h3>
+      <div class="atrisk-table-wrap">
+        <table class="usecase-table" id="atRiskTable">
+          <thead>
+            <tr><th scope="col">סוג תפקיד</th><th scope="col">מאפיין מרכזי</th><th scope="col">דוגמאות</th></tr>
+          </thead>
+          <tbody id="atRiskTbody"></tbody>
+        </table>
+      </div>
+
+      <h3 class="subhead">מודל מעבר בארבעה שלבים</h3>
+      <ol class="process-chain" id="transitionChain"></ol>
+    </div>
+  </section>
+
+  <!-- AI CENTER -->
+  <section id="center" class="section">
+    <div class="section-inner">
+      <span class="section-kicker">07</span>
+      <h2>הקמת מרכז AI ו-CAIO</h2>
+      <p class="lead" id="centerIntro"></p>
+
+      <figure class="launch-figure">
+        <img id="launchImg" src="" alt="" loading="lazy">
+        <figcaption id="launchCaption"></figcaption>
+      </figure>
+
+      <div class="caio-block">
+        <div class="caio-card">
+          <h3 id="caioTitle"></h3>
+          <p id="caioText"></p>
+          <ul id="caioResponsibilities" class="check-list"></ul>
+        </div>
+        <div class="orgchart" id="orgchart" aria-label="מבנה יחידת ה-AI"></div>
+      </div>
+
+      <div class="operating-model" id="operatingModel"></div>
+    </div>
+  </section>
+
+  <!-- RISK & ETHICS -->
+  <section id="risk" class="section section-alt">
+    <div class="section-inner">
+      <span class="section-kicker">08</span>
+      <h2>סיכונים ואתיקה</h2>
+      <p class="lead">ניהול סיכונים ואתיקה בבינה מלאכותית קשורים קשר הדוק - חלק גדול מהסיכונים תלוי לא רק בטכנולוגיה עצמה, אלא באופן שבו משתמשים בה. לחצו על כרטיס סיכון להרחבה.</p>
+      <div class="risk-grid" id="riskGrid"></div>
+
+      <h3 class="subhead">עקרונות אתיים מנחים</h3>
+      <div class="ethics-grid" id="ethicsGrid"></div>
+    </div>
+  </section>
+
+  <!-- KPI -->
+  <section id="kpi" class="section">
+    <div class="section-inner">
+      <span class="section-kicker">09</span>
+      <h2>מדידה ומשוב מתמיד</h2>
+      <p class="lead">שני מרכיבים משלימים: מדדי הצלחה שבוחנים ערך אמיתי, ומנגנון משוב שמבטיח שהתוכנית תישאר רלוונטית לאורך זמן.</p>
+
+      <div class="kpi-grid" id="kpiGrid"></div>
+
+      <h3 class="subhead">מעגל המשוב המתמיד (Feedback Loop)</h3>
+      <div class="loop-diagram" id="loopDiagram"></div>
+    </div>
+  </section>
+
+  <!-- ASSESSMENT -->
+  <section id="assessment" class="section section-alt">
+    <div class="section-inner">
+      <span class="section-kicker">10</span>
+      <h2>בדיקת מוכנות ארגונית</h2>
+      <p class="lead" id="assessmentIntro"></p>
+
+      <form id="assessmentForm" class="assessment-form"></form>
+
+      <div id="assessmentResult" class="assessment-result" hidden></div>
+    </div>
+  </section>
+
+  <!-- SUMMARY -->
+  <section id="summary" class="section summary-section">
+    <div class="section-inner">
+      <span class="section-kicker">11</span>
+      <h2>סיכום והחלטות נדרשות</h2>
+      <p class="lead" id="summaryText"></p>
+      <ul class="decision-list" id="decisionList"></ul>
+      <p class="closing-line">הבחירה היא בין ארגון שמגיב לשינויים, לבין ארגון שמוביל אותם.</p>
+    </div>
+  </section>
+
+</main>
+
+<footer class="site-footer">
+  <div class="section-inner">
+    <p>מדריך זה נבנה כגרסה גנרית ומתומצתת של תוכנית אסטרטגית להטמעת בינה מלאכותית, המיועדת לכל ארגון השוקל את הצעד הזה.</p>
+  </div>
+</footer>
+
+<script src="https://unpkg.com/lucide@latest/dist/umd/lucide.js"></script>
+<script src="data.js"></script>
+<script src="app.js"></script>
+</body>
+</html>
